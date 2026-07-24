@@ -20,6 +20,7 @@ const NotificationsPage = lazy(() => import("@/pages/notifications/Notifications
 const ProfilePage = lazy(() => import("@/pages/profile/ProfilePage"));
 const NotFoundPage = lazy(() => import("@/pages/error/NotFoundPage"));
 const UnauthorizedPage = lazy(() => import("@/pages/error/UnauthorizedPage"));
+const DashboardRedirect = lazy(() => import("@/components/common/DashboardRedirect"));
 
 function PageLoader() {
   return (
@@ -39,10 +40,20 @@ export default function App() {
 
         <Route element={<PrivateRoutes />}>
           <Route element={<MainLayout />}>
+            <Route path="/" element={<DashboardRedirect />} />
             <Route path={ROUTES.EMPLOYEE_DASHBOARD} element={<EmployeeDashboard />} />
-            <Route path={ROUTES.MANAGER_DASHBOARD} element={<ManagerDashboard />} />
-            <Route path={ROUTES.HR_DASHBOARD} element={<HRDashboard />} />
-            <Route path={ROUTES.DIRECTOR_DASHBOARD} element={<DirectorDashboard />} />
+
+            <Route element={<RoleBasedRoutes allowedRoles={[ROLES.MANAGER]} />}>
+              <Route path={ROUTES.MANAGER_DASHBOARD} element={<ManagerDashboard />} />
+            </Route>
+
+            <Route element={<RoleBasedRoutes allowedRoles={[ROLES.HR]} />}>
+              <Route path={ROUTES.HR_DASHBOARD} element={<HRDashboard />} />
+            </Route>
+
+            <Route element={<RoleBasedRoutes allowedRoles={[ROLES.DIRECTOR]} />}>
+              <Route path={ROUTES.DIRECTOR_DASHBOARD} element={<DirectorDashboard />} />
+            </Route>
 
             <Route element={<RoleBasedRoutes allowedRoles={[ROLES.EMPLOYEE, ROLES.MANAGER, ROLES.HR, ROLES.DIRECTOR]} />}>
               <Route path={ROUTES.APPLY_LEAVE} element={<ApplyLeavePage />} />

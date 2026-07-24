@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { ROUTES } from "@/constants/routes";
 import { ROLES } from "@/constants/roles";
@@ -10,13 +10,8 @@ const ROLE_DASHBOARD_MAP = {
   [ROLES.DIRECTOR]: ROUTES.DIRECTOR_DASHBOARD,
 };
 
-export default function PublicRoutes() {
-  const { isAuthenticated, user } = useAuth();
-
-  if (isAuthenticated) {
-    const target = ROLE_DASHBOARD_MAP[user?.role] ?? ROUTES.EMPLOYEE_DASHBOARD;
-    return <Navigate to={target} replace />;
-  }
-
-  return <Outlet />;
+export default function DashboardRedirect() {
+  const { user } = useAuth();
+  const target = ROLE_DASHBOARD_MAP[user?.role] ?? ROUTES.EMPLOYEE_DASHBOARD;
+  return <Navigate to={target} replace />;
 }

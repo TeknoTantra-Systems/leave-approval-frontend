@@ -1,30 +1,169 @@
-import { HiOutlineDocumentText } from "react-icons/hi2";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import toast from "react-hot-toast";
+import { useUser } from "@/context/UserContext";
+import { PageHeader } from "@/components/common";
+import { Card, Input, Select, Textarea, Button, ConfirmDialog } from "@/components/ui";
+import { LEAVE_TYPE_OPTIONS } from "@/constants/leaveTypes";
+import { ROUTES } from "@/constants/routes";
+import { calculateLeaveDays } from "@/utils/dateHelpers";
+import { submitNewLeaveRequest } from "@/services/leaveService";
+
+const leaveSchema = z.object({
+  leaveType: z.string().min(1, "Please select a leave type"),
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().min(1, "End date is required"),
+  reason: z.string().min(10, "Reason must be at least 10 characters"),
+}).refine((data) => {
+  if (data.startDate && data.endDate) {
+    return new Date(data.endDate) >= new Date(data.startDate);
+  }
+  return true;
+}, {
+  message: "End date must be on or after start date",
+  path: ["endDate"],
+});
 
 export default function ApplyLeavePage() {
+  const { name, employeeId, department } = useUser();
+  const navigate = useNavigate();
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingData, setPendingData] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(leaveSchema),
+    defaultValues: {
+      leaveType: "",
+      startDate: "",
+      endDate: "",
+      reason: "",
+    },
+  });
+
+  const startDate = watch("startDate");
+  const endDate = watch("endDate");
+  const totalDays = calculateLeaveDays(startDate, endDate);
+
+  const onValidSubmit = (data) => {
+    setPendingData({ ...data, totalDays });
+    setShowConfirm(true);
+  };
+
+  const confirmSubmit = async () => {
+    setShowConfirm(false);
+    setIsSubmitting(true);
+    try {
+      await submitNewLeaveRequest({
+        ...pendingData,
+        employeeName: name,
+        employeeId,
+        department,
+      });
+      toast.success("Leave request submitted successfully!");
+      navigate(ROUTES.LEAVE_HISTORY);
+    } catch {
+      toast.error("Failed to submit leave request. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
-          Apply for Leave
-        </h1>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-          Submit a new leave request
-        </p>
-      </div>
+      <PageHeader
+        title="Apply for Leave"
+        description="Submit a new leave request for approval."
+      />
 
-      <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/30">
-            <HiOutlineDocumentText className="h-8 w-8 text-blue-500 dark:text-blue-400" />
+      <Card padding="p-6 sm:p-8">
+        <form onSubmit={handleSubmit(onValidSubmit)} className="space-y-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Input label="Employee Name" value={name} disabled />
+            <Input label="Employee ID" value={employeeId} disabled />
           </div>
-          <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">
-            Form will be implemented in Phase 6
-          </h3>
-          <p className="mt-2 max-w-sm text-sm text-slate-500 dark:text-slate-400">
-            The leave application form will allow you to select leave type, dates, and provide a reason.
-          </p>
-        </div>
-      </div>
+
+          <Input label="Department" value={department} disabled />
+
+          <Select
+            label="Leave Type"
+            options={LEAVE_TYPE_OPTIONS}
+            placeholder="Select leave type"
+            error={errors.leaveType?.message}
+            {...register("leaveType")}
+          />
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Input
+              label="Start Date"
+              type="date"
+              error={errors.startDate?.message}
+              {...register("startDate")}
+            />
+            <Input
+              label="End Date"
+              type="date"
+              error={errors.endDate?.message}
+              {...register("endDate")}
+            />
+          </div>
+
+          {totalDays > 0 && (
+            <div className="rounded-lg bg-blue-50 p-3 text-sm text-blue-700 dark:bg-blue-900/20 dark:text-blue-400">
+              Total leave days: <span className="font-semibold">{totalDays}</span>
+              {totalDays > 10 && (
+                <span className="ml-2 text-xs text-blue-600 dark:text-blue-300">
+                  (Requires Director approval)
+                </span>
+              )}
+              {totalDays > 3 && totalDays <= 10 && (
+                <span className="ml-2 text-xs text-blue-600 dark:text-blue-300">
+                  (Requires HR approval)
+                </span>
+              )}
+            </div>
+          )}
+
+          <Textarea
+            label="Reason"
+            rows={4}
+            placeholder="Please provide a reason for your leave request..."
+            error={errors.reason?.message}
+            {...register("reason")}
+          />
+
+          <div className="flex justify-end gap-3 pt-2">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => navigate(ROUTES.LEAVE_HISTORY)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" isLoading={isSubmitting}>
+              Submit Request
+            </Button>
+          </div>
+        </form>
+      </Card>
+
+      <ConfirmDialog
+        isOpen={showConfirm}
+        onClose={() => setShowConfirm(false)}
+        onConfirm={confirmSubmit}
+        title="Confirm Leave Request"
+        message={`Submit ${pendingData?.leaveType} request for ${totalDays} day(s) from ${pendingData?.startDate} to ${pendingData?.endDate}?`}
+        confirmLabel="Submit"
+        isLoading={isSubmitting}
+      />
     </div>
   );
 }
