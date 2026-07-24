@@ -48,13 +48,35 @@ export const NOTIFICATION_TYPES = {
   REMINDER: "reminder",
   ESCALATED: "escalated",
   CLARIFICATION: "clarification",
+  BALANCE_UPDATED: "balance_updated",
 };
 
 export const NOTIFICATION_TYPE_LABELS = {
-  [NOTIFICATION_TYPES.SUBMITTED]: "Submitted",
-  [NOTIFICATION_TYPES.APPROVED]: "Approved",
-  [NOTIFICATION_TYPES.REJECTED]: "Rejected",
+  [NOTIFICATION_TYPES.SUBMITTED]: "Leave Submitted",
+  [NOTIFICATION_TYPES.APPROVED]: "Leave Approved",
+  [NOTIFICATION_TYPES.REJECTED]: "Leave Rejected",
   [NOTIFICATION_TYPES.REMINDER]: "Reminder",
   [NOTIFICATION_TYPES.ESCALATED]: "Escalated",
-  [NOTIFICATION_TYPES.CLARIFICATION]: "Clarification Request",
+  [NOTIFICATION_TYPES.CLARIFICATION]: "Clarification Requested",
+  [NOTIFICATION_TYPES.BALANCE_UPDATED]: "Leave Balance Updated",
+};
+
+export const NOTIFICATION_TYPE_COLORS = {
+  [NOTIFICATION_TYPES.SUBMITTED]: "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
+  [NOTIFICATION_TYPES.APPROVED]: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400",
+  [NOTIFICATION_TYPES.REJECTED]: "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400",
+  [NOTIFICATION_TYPES.REMINDER]: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
+  [NOTIFICATION_TYPES.ESCALATED]: "bg-violet-100 text-violet-600 dark:bg-violet-900/30 dark:text-violet-400",
+  [NOTIFICATION_TYPES.CLARIFICATION]: "bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400",
+  [NOTIFICATION_TYPES.BALANCE_UPDATED]: "bg-teal-100 text-teal-600 dark:bg-teal-900/30 dark:text-teal-400",
+};
+
+export const NOTIFICATION_TYPE_DOT_COLORS = {
+  [NOTIFICATION_TYPES.SUBMITTED]: "bg-blue-500",
+  [NOTIFICATION_TYPES.APPROVED]: "bg-emerald-500",
+  [NOTIFICATION_TYPES.REJECTED]: "bg-red-500",
+  [NOTIFICATION_TYPES.REMINDER]: "bg-amber-500",
+  [NOTIFICATION_TYPES.ESCALATED]: "bg-violet-500",
+  [NOTIFICATION_TYPES.CLARIFICATION]: "bg-orange-500",
+  [NOTIFICATION_TYPES.BALANCE_UPDATED]: "bg-teal-500",
 };

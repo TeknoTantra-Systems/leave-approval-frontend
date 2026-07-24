@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useUser } from "@/context/UserContext";
@@ -7,6 +7,8 @@ import { ROLE_LABELS } from "@/constants/roles";
 import { ROUTES } from "@/constants/routes";
 import { HiOutlineBell, HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { FiSun, FiMoon, FiLogOut, FiMenu, FiUser } from "react-icons/fi";
+import { NotificationBadge } from "@/components/notifications";
+import { getNotifications } from "@/services/notificationService";
 
 export default function Header({ onToggleSidebar }) {
   const { logout } = useAuth();
@@ -15,6 +17,16 @@ export default function Header({ onToggleSidebar }) {
   const navigate = useNavigate();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    async function load() {
+      if (!user?.id) return;
+      const data = await getNotifications(user.id);
+      setUnreadCount(data.filter((n) => !n.isRead).length);
+    }
+    load();
+  }, [user?.id]);
 
   const handleLogout = () => {
     logout();
@@ -59,9 +71,7 @@ export default function Header({ onToggleSidebar }) {
           aria-label="Notifications"
         >
           <HiOutlineBell className="h-5 w-5" />
-          <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
-            3
-          </span>
+          <NotificationBadge count={unreadCount} />
         </Link>
 
         <div className="relative">
