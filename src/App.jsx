@@ -18,6 +18,7 @@ const HRApprovalPage = lazy(() => import("@/pages/approval/HRApprovalPage"));
 const DirectorApprovalPage = lazy(() => import("@/pages/approval/DirectorApprovalPage"));
 const NotificationsPage = lazy(() => import("@/pages/notifications/NotificationsPage"));
 const ProfilePage = lazy(() => import("@/pages/profile/ProfilePage"));
+const SettingsPage = lazy(() => import("@/pages/settings/SettingsPage"));
 const NotFoundPage = lazy(() => import("@/pages/error/NotFoundPage"));
 const UnauthorizedPage = lazy(() => import("@/pages/error/UnauthorizedPage"));
 const DashboardRedirect = lazy(() => import("@/components/common/DashboardRedirect"));
@@ -61,6 +62,7 @@ export default function App() {
               <Route path={ROUTES.LEAVE_DETAILS} element={<LeaveDetailsPage />} />
               <Route path={ROUTES.NOTIFICATIONS} element={<NotificationsPage />} />
               <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+              <Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
             </Route>
 
             <Route element={<RoleBasedRoutes allowedRoles={[ROLES.MANAGER]} />}>

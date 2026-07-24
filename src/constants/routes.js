@@ -17,6 +17,7 @@ export const ROUTES = {
 
   NOTIFICATIONS: "/notifications",
   PROFILE: "/profile",
+  SETTINGS: "/settings",
 
   UNAUTHORIZED: "/unauthorized",
   NOT_FOUND: "*",
@@ -37,6 +38,7 @@ export const ROUTE_LABELS = {
   [ROUTES.DIRECTOR_APPROVAL]: "Director Approvals",
   [ROUTES.NOTIFICATIONS]: "Notifications",
   [ROUTES.PROFILE]: "Profile",
+  [ROUTES.SETTINGS]: "Settings",
   [ROUTES.UNAUTHORIZED]: "Unauthorized",
   [ROUTES.NOT_FOUND]: "Not Found",
 };
