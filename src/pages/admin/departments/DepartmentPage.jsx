@@ -29,10 +29,11 @@ export default function DepartmentPage() {
 
   const filtered = useMemo(() => {
     return departments.filter((d) => {
+      const headName = typeof d.head === "object" ? d.head?.name : d.head;
       return (
         !searchQuery ||
         d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (d.head && d.head.toLowerCase().includes(searchQuery.toLowerCase()))
+        (headName && headName.toLowerCase().includes(searchQuery.toLowerCase()))
       );
     });
   }, [departments, searchQuery]);
@@ -51,7 +52,7 @@ export default function DepartmentPage() {
 
   const openEditModal = (dept) => {
     setEditingDept(dept);
-    setFormData({ name: dept.name, head: dept.head || "" });
+    setFormData({ name: dept.name, head: (typeof dept.head === "object" ? dept.head?.name : dept.head) || "" });
     setModalOpen(true);
   };
 
@@ -139,7 +140,7 @@ export default function DepartmentPage() {
                 {paginatedItems.map((dept) => (
                   <tr key={dept.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/30">
                     <td className="px-5 py-3 font-medium text-slate-700 dark:text-slate-200">{dept.name}</td>
-                    <td className="px-5 py-3 text-slate-600 dark:text-slate-400">{dept.head || "—"}</td>
+                    <td className="px-5 py-3 text-slate-600 dark:text-slate-400">{(typeof dept.head === "object" ? dept.head?.name : dept.head) || "—"}</td>
                     <td className="px-5 py-3 text-center font-medium text-slate-700 dark:text-slate-200">{dept.employeeCount}</td>
                     <td className="px-5 py-3">
                       <StatusBadge status={dept.status === "active" ? "approved" : "rejected"} />
@@ -162,7 +163,7 @@ export default function DepartmentPage() {
                 <div className="flex items-start justify-between">
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium text-slate-700 dark:text-slate-200">{dept.name}</p>
-                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">Head: {dept.head || "—"}</p>
+                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">Head: {(typeof dept.head === "object" ? dept.head?.name : dept.head) || "—"}</p>
                     <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-500">{dept.employeeCount} employees</p>
                   </div>
                   <div className="flex shrink-0 gap-2">

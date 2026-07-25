@@ -27,8 +27,8 @@ export default function Header({ onToggleSidebar }) {
     load();
   }, [user?.id]);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate(ROUTES.LOGIN);
   };
 

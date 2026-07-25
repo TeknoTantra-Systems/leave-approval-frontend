@@ -63,7 +63,7 @@ export default function EditUserPage() {
           email: user.email,
           employeeId: user.employeeId,
           role: user.role,
-          department: user.department,
+          department: typeof user.department === "object" ? user.department?.name : user.department,
           phone: user.phone || "",
           managerName: user.managerName || "",
         });

@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useAuth } from "@/context/AuthContext";
 import { ROUTES } from "@/constants/routes";
+import { ROLES } from "@/constants/roles";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 
 const loginSchema = z.object({
@@ -41,11 +42,11 @@ export default function LoginPage() {
     try {
       const user = await login(data.email, data.password);
       const dashboardMap = {
-        employee: ROUTES.EMPLOYEE_DASHBOARD,
-        manager: ROUTES.MANAGER_DASHBOARD,
-        hr: ROUTES.HR_DASHBOARD,
-        director: ROUTES.DIRECTOR_DASHBOARD,
-        app_admin: ROUTES.ADMIN_DASHBOARD,
+        [ROLES.EMPLOYEE]: ROUTES.EMPLOYEE_DASHBOARD,
+        [ROLES.MANAGER]: ROUTES.MANAGER_DASHBOARD,
+        [ROLES.HR]: ROUTES.HR_DASHBOARD,
+        [ROLES.DIRECTOR]: ROUTES.DIRECTOR_DASHBOARD,
+        [ROLES.APP_ADMIN]: ROUTES.ADMIN_DASHBOARD,
       };
       navigate(dashboardMap[user.role] ?? ROUTES.EMPLOYEE_DASHBOARD);
     } catch (err) {

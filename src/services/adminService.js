@@ -1,18 +1,5 @@
+import api from "./api";
 import {
-  fetchAllUsers,
-  fetchUserById,
-  createUser,
-  updateUser,
-  deleteUser,
-  deactivateUser,
-  fetchDepartments,
-  createDepartment,
-  updateDepartment,
-  deleteDepartment,
-  fetchLeaveTypes,
-  createLeaveType,
-  updateLeaveType,
-  deleteLeaveType,
   fetchApprovalMatrix,
   updateApprovalMatrix,
   fetchAdminLeaveRequests,
@@ -20,59 +7,73 @@ import {
 } from "./mock/adminMock";
 
 export async function getAllUsers() {
-  return fetchAllUsers();
+  const { data } = await api.get("/users");
+  return data.data;
 }
 
 export async function getUserById(id) {
-  return fetchUserById(id);
+  const { data } = await api.get(`/users/${id}`);
+  return data.data;
 }
 
-export async function createNewUser(data) {
-  return createUser(data);
+export async function createNewUser(userData) {
+  const { data } = await api.post("/users", userData);
+  return data.data;
 }
 
-export async function updateExistingUser(id, data) {
-  return updateUser(id, data);
+export async function updateExistingUser(id, userData) {
+  const { data } = await api.put(`/users/${id}`, userData);
+  return data.data;
 }
 
 export async function removeUser(id) {
-  return deleteUser(id);
+  const { data } = await api.delete(`/users/${id}`);
+  return data.data;
 }
 
 export async function toggleUserStatus(id) {
-  return deactivateUser(id);
+  const { data } = await api.put(`/users/${id}/toggle-status`);
+  return data.data;
 }
 
 export async function getDepartments() {
-  return fetchDepartments();
+  const { data } = await api.get("/departments");
+  return data.data;
 }
 
-export async function createNewDepartment(data) {
-  return createDepartment(data);
+export async function createNewDepartment(departmentData) {
+  const { data } = await api.post("/departments", departmentData);
+  return data.data;
 }
 
-export async function updateExistingDepartment(id, data) {
-  return updateDepartment(id, data);
+export async function updateExistingDepartment(id, departmentData) {
+  const { data } = await api.put(`/departments/${id}`, departmentData);
+  return data.data;
 }
 
 export async function removeDepartment(id) {
-  return deleteDepartment(id);
+  const { data } = await api.delete(`/departments/${id}`);
+  return data.data;
 }
 
 export async function getLeaveTypes() {
-  return fetchLeaveTypes();
+  const { data } = await api.get("/leave-types");
+  return data.data;
 }
 
-export async function createNewLeaveType(data) {
-  return createLeaveType(data);
+export async function createNewLeaveType(leaveTypeData) {
+  const { data } = await api.post("/leave-types", leaveTypeData);
+  return data.data;
 }
 
-export async function updateExistingLeaveType(id, data) {
-  return updateLeaveType(id, data);
+export async function updateExistingLeaveType(id, leaveTypeData) {
+  const { data } = await api.put(`/leave-types/${id}`, leaveTypeData);
+  return data.data;
 }
 
 export async function removeLeaveType(id) {
-  return deleteLeaveType(id);
+  const { data } = await api.delete(`/leave-types/${id}`);
+  return data.data;
 }
 
 export async function getApprovalMatrix() {

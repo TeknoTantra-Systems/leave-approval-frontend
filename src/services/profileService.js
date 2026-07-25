@@ -1,9 +1,11 @@
-import { fetchProfile, updateProfile } from "./mock/profileMock";
+import api from "./api";
 
-export async function getProfile(userId) {
-  return fetchProfile(userId);
+export async function getProfile() {
+  const { data } = await api.get("/auth/profile");
+  return data.data;
 }
 
-export async function updateProfileData(userId, data) {
-  return updateProfile(userId, data);
+export async function updateProfileData(profileData) {
+  const { data } = await api.put("/auth/profile", profileData);
+  return data.data;
 }

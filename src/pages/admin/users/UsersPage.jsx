@@ -30,12 +30,13 @@ export default function UsersPage() {
   const filtered = useMemo(() => {
     return users.filter((u) => {
       const q = searchQuery.toLowerCase();
+      const deptName = typeof u.department === "object" ? u.department?.name : u.department;
       return (
         !searchQuery ||
         u.name.toLowerCase().includes(q) ||
         u.email.toLowerCase().includes(q) ||
-        u.employeeId.toLowerCase().includes(q) ||
-        u.department.toLowerCase().includes(q) ||
+        (u.employeeId || "").toLowerCase().includes(q) ||
+        (deptName || "").toLowerCase().includes(q) ||
         (ROLE_LABELS[u.role] ?? "").toLowerCase().includes(q)
       );
     });
@@ -142,13 +143,13 @@ export default function UsersPage() {
                       <p className="text-xs text-slate-400 dark:text-slate-500">{user.email}</p>
                     </td>
                     <td className="px-5 py-3 text-slate-600 dark:text-slate-400">
-                      {user.department}
+                      {typeof user.department === "object" ? user.department?.name : user.department}
                     </td>
                     <td className="px-5 py-3">
                       <StatusBadge status={user.role} type="role" />
                     </td>
                     <td className="px-5 py-3 text-slate-600 dark:text-slate-400">
-                      {user.managerName || "—"}
+                      {typeof user.manager === "object" ? user.manager?.name : (user.managerName || user.manager || "—")}
                     </td>
                     <td className="px-5 py-3">
                       <StatusBadge
@@ -201,16 +202,16 @@ export default function UsersPage() {
                       <StatusBadge status={user.role} type="role" />
                     </div>
                     <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                      {user.employeeId} &middot; {user.department}
+                      {user.employeeId || ""} &middot; {typeof user.department === "object" ? user.department?.name : user.department}
                     </p>
                     <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-500">
                       {user.email}
                     </p>
                     <div className="mt-2 flex items-center gap-2">
                       <StatusBadge status={user.status === "active" ? "approved" : "rejected"} />
-                      {user.managerName && (
+                      {(user.managerName || user.manager) && (
                         <span className="text-xs text-slate-400 dark:text-slate-500">
-                          Mgr: {user.managerName}
+                          Mgr: {typeof user.manager === "object" ? user.manager?.name : (user.managerName || user.manager)}
                         </span>
                       )}
                     </div>

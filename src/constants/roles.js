@@ -1,9 +1,9 @@
 export const ROLES = {
-  EMPLOYEE: "employee",
-  MANAGER: "manager",
-  HR: "hr",
-  DIRECTOR: "director",
-  APP_ADMIN: "app_admin",
+  EMPLOYEE: "EMPLOYEE",
+  MANAGER: "MANAGER",
+  HR: "HR",
+  DIRECTOR: "DIRECTOR",
+  APP_ADMIN: "ADMIN",
 };
 
 export const ROLE_LABELS = {

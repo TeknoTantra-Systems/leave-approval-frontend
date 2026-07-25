@@ -76,7 +76,7 @@ export default function ProfilePage() {
     async function load() {
       try {
         const [profileData, balanceData] = await Promise.all([
-          getProfile(user?.id),
+          getProfile(),
           getLeaveBalance(user?.id),
         ]);
         setProfile(profileData);
@@ -139,7 +139,7 @@ export default function ProfilePage() {
             {profile?.name}
           </h2>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            {profile?.designation}
+            {profile?.designation || ROLE_LABELS[profile?.role] || profile?.role}
           </p>
           <span className="mt-2 inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
             {ROLE_LABELS[profile?.role] ?? profile?.role}
@@ -149,7 +149,7 @@ export default function ProfilePage() {
               Employee ID
             </p>
             <p className="font-mono text-sm font-semibold text-slate-700 dark:text-slate-200">
-              {profile?.employeeId}
+              {profile?.employeeId || "-"}
             </p>
           </div>
         </Card>
@@ -163,10 +163,10 @@ export default function ProfilePage() {
               <InfoRow icon={HiOutlineUser} label="Full Name" value={profile?.name} />
               <InfoRow icon={HiOutlineEnvelope} label="Email" value={profile?.email} />
               <InfoRow icon={HiOutlinePhone} label="Phone" value={profile?.phone} />
-              <InfoRow icon={HiOutlineBuildingOffice2} label="Department" value={profile?.department} />
-              <InfoRow icon={HiOutlineBriefcase} label="Designation" value={profile?.designation} />
+              <InfoRow icon={HiOutlineBuildingOffice2} label="Department" value={profile?.department?.name || profile?.department} />
+              <InfoRow icon={HiOutlineBriefcase} label="Designation" value={profile?.designation || ROLE_LABELS[profile?.role] || profile?.role} />
               <InfoRow icon={HiOutlineCalendarDays} label="Joining Date" value={formatDate(profile?.joiningDate)} />
-              <InfoRow icon={HiOutlineUser} label="Reporting Manager" value={profile?.manager} />
+              <InfoRow icon={HiOutlineUser} label="Reporting Manager" value={profile?.manager?.name || profile?.manager} />
               <InfoRow icon={HiOutlineMapPin} label="Location" value={profile?.location} />
             </div>
           </Card>
