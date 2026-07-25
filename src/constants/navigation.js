@@ -7,6 +7,13 @@ import {
   HiOutlineClipboardDocumentCheck,
   HiOutlineBell,
   HiOutlineUserCircle,
+  HiOutlineUsers,
+  HiOutlineBuildingOffice2,
+  HiOutlineClipboardDocumentList,
+  HiOutlineShieldCheck,
+  HiOutlineDocumentDuplicate,
+  HiOutlineChartBar,
+  HiOutlineCog6Tooth,
 } from "react-icons/hi2";
 
 export const NAV_ITEMS = {
@@ -36,6 +43,18 @@ export const NAV_ITEMS = {
     { label: "Director Approvals", path: ROUTES.DIRECTOR_APPROVAL, icon: HiOutlineClipboardDocumentCheck },
     { label: "Leave History", path: ROUTES.LEAVE_HISTORY, icon: HiOutlineClock },
     { label: "Notifications", path: ROUTES.NOTIFICATIONS, icon: HiOutlineBell },
+    { label: "Profile", path: ROUTES.PROFILE, icon: HiOutlineUserCircle },
+  ],
+  [ROLES.APP_ADMIN]: [
+    { label: "Dashboard", path: ROUTES.ADMIN_DASHBOARD, icon: HiOutlineHome },
+    { label: "Users", path: ROUTES.ADMIN_USERS, icon: HiOutlineUsers },
+    { label: "Departments", path: ROUTES.ADMIN_DEPARTMENTS, icon: HiOutlineBuildingOffice2 },
+    { label: "Leave Types", path: ROUTES.ADMIN_LEAVE_TYPES, icon: HiOutlineClipboardDocumentList },
+    { label: "Approval Matrix", path: ROUTES.ADMIN_APPROVAL_MATRIX, icon: HiOutlineShieldCheck },
+    { label: "Leave Requests", path: ROUTES.ADMIN_LEAVE_REQUESTS, icon: HiOutlineDocumentDuplicate },
+    { label: "Reports", path: ROUTES.ADMIN_REPORTS, icon: HiOutlineChartBar },
+    { label: "Notifications", path: ROUTES.NOTIFICATIONS, icon: HiOutlineBell },
+    { label: "Settings", path: ROUTES.SETTINGS, icon: HiOutlineCog6Tooth },
     { label: "Profile", path: ROUTES.PROFILE, icon: HiOutlineUserCircle },
   ],
 };

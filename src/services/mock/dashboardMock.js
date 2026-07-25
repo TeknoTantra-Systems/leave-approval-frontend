@@ -27,6 +27,12 @@ export const MOCK_RECENT_ACTIVITIES = {
     { id: "3", title: "Senior Manager - Leave Escalation", subtitle: "Dec 15 - Dec 22, 2025", status: LEAVE_STATUSES.PENDING, date: "2025-12-18T12:00:00Z" },
     { id: "4", title: "Annual Leave Policy Review", subtitle: "FY 2026 Proposals", status: LEAVE_STATUSES.APPROVED, date: "2025-12-16T09:00:00Z" },
   ],
+  [ROLES.APP_ADMIN]: [
+    { id: "1", title: "New Employee Registration", subtitle: "Ravi Kumar - Engineering", status: LEAVE_STATUSES.APPROVED, date: "2025-12-20T10:00:00Z" },
+    { id: "2", title: "Department Updated", subtitle: "Design Team restructuring", status: LEAVE_STATUSES.PENDING, date: "2025-12-19T14:00:00Z" },
+    { id: "3", title: "Leave Policy Modified", subtitle: "Annual leave increased to 25 days", status: LEAVE_STATUSES.APPROVED, date: "2025-12-18T09:00:00Z" },
+    { id: "4", title: "System Backup Completed", subtitle: "Automated weekly backup", status: LEAVE_STATUSES.APPROVED, date: "2025-12-17T03:00:00Z" },
+  ],
 };
 
 export const MOCK_LEAVE_REQUESTS = [
@@ -236,5 +242,15 @@ export const MOCK_DASHBOARD_STATS = {
     approvedThisQuarter: 37,
     escalatedRequests: 6,
     totalRequests: 89,
+  },
+  [ROLES.APP_ADMIN]: {
+    totalEmployees: 45,
+    totalManagers: 8,
+    totalHR: 3,
+    totalDirectors: 2,
+    pendingLeaveRequests: 12,
+    approvedRequests: 156,
+    rejectedRequests: 14,
+    activeUsers: 52,
   },
 };

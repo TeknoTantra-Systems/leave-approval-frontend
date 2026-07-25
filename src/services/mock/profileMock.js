@@ -55,6 +55,20 @@ export const MOCK_PROFILES = {
     location: "Mumbai, India",
     avatar: null,
   },
+  "5": {
+    id: "5",
+    name: "System Admin",
+    email: "admin@company.com",
+    phone: "+91 98765 43214",
+    department: "IT",
+    role: "app_admin",
+    employeeId: "ADM001",
+    designation: "System Administrator",
+    joiningDate: "2022-11-01",
+    manager: null,
+    location: "Bangalore, India",
+    avatar: null,
+  },
 };
 
 export async function fetchProfile(userId) {

@@ -40,6 +40,15 @@ const MOCK_USERS = [
     department: "Executive",
     employeeId: "DIR001",
   },
+  {
+    id: "5",
+    email: "admin@company.com",
+    password: "password123",
+    name: "System Admin",
+    role: ROLES.APP_ADMIN,
+    department: "IT",
+    employeeId: "ADM001",
+  },
 ];
 
 export function AuthProvider({ children }) {

@@ -17,6 +17,7 @@ const DEMO_ACCOUNTS = [
   { email: "manager@company.com", role: "Manager" },
   { email: "hr@company.com", role: "HR" },
   { email: "director@company.com", role: "Director" },
+  { email: "admin@company.com", role: "App Admin" },
 ];
 
 export default function LoginPage() {
@@ -44,6 +45,7 @@ export default function LoginPage() {
         manager: ROUTES.MANAGER_DASHBOARD,
         hr: ROUTES.HR_DASHBOARD,
         director: ROUTES.DIRECTOR_DASHBOARD,
+        app_admin: ROUTES.ADMIN_DASHBOARD,
       };
       navigate(dashboardMap[user.role] ?? ROUTES.EMPLOYEE_DASHBOARD);
     } catch (err) {

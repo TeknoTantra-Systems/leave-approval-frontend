@@ -10,7 +10,8 @@ import { PageHeader } from "@/components/common";
 import { Card, Input, Button, Loader, ConfirmDialog } from "@/components/ui";
 import { getSettings, updateSettingsData, changeUserPassword } from "@/services/settingsService";
 import { ROUTES } from "@/constants/routes";
-import { HiOutlineSun, HiOutlineMoon, HiOutlineBell, HiOutlineLockClosed, HiOutlineArrowRightOnRectangle, HiOutlineCheckCircle, HiOutlineGlobeAlt } from "react-icons/hi2";
+import { ROLES } from "@/constants/roles";
+import { HiOutlineSun, HiOutlineMoon, HiOutlineBell, HiOutlineLockClosed, HiOutlineArrowRightOnRectangle, HiOutlineCheckCircle, HiOutlineGlobeAlt, HiOutlineBuildingOffice2, HiOutlineClock, HiOutlineCalendarDays } from "react-icons/hi2";
 
 const passwordSchema = z.object({
   currentPassword: z.string().min(1, "Current password is required"),
@@ -314,6 +315,93 @@ export default function SettingsPage() {
               </select>
             </SettingRow>
           </Card>
+
+          {user?.role === ROLES.APP_ADMIN && (
+            <Card>
+              <h3 className="mb-2 text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                System Settings
+              </h3>
+              <div className="divide-y divide-slate-100 dark:divide-slate-700">
+                <SettingRow
+                  icon={HiOutlineBuildingOffice2}
+                  label="Company Name"
+                  description="The name displayed across the application"
+                >
+                  <input
+                    type="text"
+                    defaultValue="LeaveTrack Inc."
+                    className="w-48 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+                  />
+                </SettingRow>
+                <SettingRow
+                  icon={HiOutlineCalendarDays}
+                  label="Working Days"
+                  description="Number of working days per week"
+                >
+                  <select
+                    defaultValue="5"
+                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+                  >
+                    <option value="5">5 days (Mon-Fri)</option>
+                    <option value="6">6 days (Mon-Sat)</option>
+                  </select>
+                </SettingRow>
+                <SettingRow
+                  icon={HiOutlineBell}
+                  label="Reminder Interval"
+                  description="How often to send leave reminders"
+                >
+                  <select
+                    defaultValue="daily"
+                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+                  >
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="biweekly">Bi-weekly</option>
+                  </select>
+                </SettingRow>
+                <SettingRow
+                  icon={HiOutlineClock}
+                  label="Escalation Interval"
+                  description="Time before unattended requests are escalated"
+                >
+                  <select
+                    defaultValue="48"
+                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+                  >
+                    <option value="24">24 hours</option>
+                    <option value="48">48 hours</option>
+                    <option value="72">72 hours</option>
+                  </select>
+                </SettingRow>
+                <SettingRow
+                  icon={HiOutlineCalendarDays}
+                  label="Weekend Configuration"
+                  description="Which days are considered weekends"
+                >
+                  <select
+                    defaultValue="sat-sun"
+                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+                  >
+                    <option value="sat-sun">Saturday - Sunday</option>
+                    <option value="fri-sat">Friday - Saturday</option>
+                    <option value="sun">Sunday only</option>
+                  </select>
+                </SettingRow>
+                <SettingRow
+                  icon={HiOutlineCalendarDays}
+                  label="Default Leave Balance"
+                  description="Default annual leave days for new employees"
+                >
+                  <input
+                    type="number"
+                    defaultValue="20"
+                    className="w-24 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+                  />
+                </SettingRow>
+              </div>
+            </Card>
+          )}
         </div>
 
         <div className="lg:col-span-1">

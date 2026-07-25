@@ -43,6 +43,17 @@ const MOCK_SETTINGS = {
     },
     language: "en",
   },
+  "5": {
+    userId: "5",
+    notifications: {
+      email: true,
+      push: true,
+      leaveUpdates: true,
+      approvalUpdates: true,
+      reminders: true,
+    },
+    language: "en",
+  },
 };
 
 const MOCK_PASSWORDS = {
@@ -50,6 +61,7 @@ const MOCK_PASSWORDS = {
   "2": "password123",
   "3": "password123",
   "4": "password123",
+  "5": "password123",
 };
 
 export async function fetchSettings(userId) {

@@ -158,6 +158,36 @@ export const MOCK_NOTIFICATIONS = [
     isRead: true,
     createdAt: days(5),
   },
+  {
+    id: "N016",
+    userId: "5",
+    type: NOTIFICATION_TYPES.SUBMITTED,
+    title: "System Alert",
+    message: "5 new leave requests pending processing across departments.",
+    relatedLeaveId: null,
+    isRead: false,
+    createdAt: mins(30),
+  },
+  {
+    id: "N017",
+    userId: "5",
+    type: NOTIFICATION_TYPES.APPROVED,
+    title: "User Registration",
+    message: "New employee Ravi Kumar has been registered in the system.",
+    relatedLeaveId: null,
+    isRead: false,
+    createdAt: hours(2),
+  },
+  {
+    id: "N018",
+    userId: "5",
+    type: NOTIFICATION_TYPES.BALANCE_UPDATED,
+    title: "System Backup Complete",
+    message: "Weekly system backup completed successfully.",
+    relatedLeaveId: null,
+    isRead: true,
+    createdAt: days(1),
+  },
 ];
 
 export async function fetchNotifications(userId) {

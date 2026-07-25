@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "@/context/UserContext";
 import { PageHeader } from "@/components/common";
-import { Card, Avatar, Loader } from "@/components/ui";
+import { Card, Avatar, Loader, EmptyState } from "@/components/ui";
 import { getProfile } from "@/services/profileService";
 import { getLeaveBalance } from "@/services/leaveService";
 import { formatDate } from "@/utils/dateHelpers";
 import { LEAVE_TYPE_LABELS } from "@/constants/leaveTypes";
 import { ROLE_LABELS } from "@/constants/roles";
 import { ROUTES } from "@/constants/routes";
-import { HiOutlineCog6Tooth, HiOutlineBriefcase, HiOutlineCalendarDays, HiOutlineMapPin, HiOutlineUser, HiOutlinePhone, HiOutlineEnvelope, HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import { HiOutlineCog6Tooth, HiOutlineBriefcase, HiOutlineCalendarDays, HiOutlineMapPin, HiOutlineUser, HiOutlinePhone, HiOutlineEnvelope, HiOutlineBuildingOffice2, HiOutlineUserCircle } from "react-icons/hi2";
 
 function InfoRow({ icon: Icon, label, value }) {
   return (
@@ -70,16 +70,22 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [leaveBalance, setLeaveBalance] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function load() {
-      const [profileData, balanceData] = await Promise.all([
-        getProfile(user?.id),
-        getLeaveBalance(user?.id),
-      ]);
-      setProfile(profileData);
-      setLeaveBalance(balanceData);
-      setLoading(false);
+      try {
+        const [profileData, balanceData] = await Promise.all([
+          getProfile(user?.id),
+          getLeaveBalance(user?.id),
+        ]);
+        setProfile(profileData);
+        setLeaveBalance(balanceData);
+      } catch (err) {
+        setError(err.message || "Failed to load profile");
+      } finally {
+        setLoading(false);
+      }
     }
     load();
   }, [user?.id]);
@@ -88,6 +94,24 @@ export default function ProfilePage() {
     return (
       <div className="flex h-64 items-center justify-center">
         <Loader size="lg" />
+      </div>
+    );
+  }
+
+  if (error || !profile) {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          title="My Profile"
+          description="View your personal information and leave balance."
+        />
+        <Card>
+          <EmptyState
+            icon={HiOutlineUserCircle}
+            title="Profile not available"
+            description={error || "No profile data found for your account."}
+          />
+        </Card>
       </div>
     );
   }
