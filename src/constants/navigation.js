@@ -6,7 +6,6 @@ import {
   HiOutlineClock,
   HiOutlineClipboardDocumentCheck,
   HiOutlineBell,
-  HiOutlineUserCircle,
   HiOutlineUsers,
   HiOutlineBuildingOffice2,
   HiOutlineClipboardDocumentList,
@@ -22,28 +21,24 @@ export const NAV_ITEMS = {
     { label: "Apply Leave", path: ROUTES.APPLY_LEAVE, icon: HiOutlineDocumentText },
     { label: "Leave History", path: ROUTES.LEAVE_HISTORY, icon: HiOutlineClock },
     { label: "Notifications", path: ROUTES.NOTIFICATIONS, icon: HiOutlineBell },
-    { label: "Profile", path: ROUTES.PROFILE, icon: HiOutlineUserCircle },
   ],
   [ROLES.MANAGER]: [
     { label: "Dashboard", path: ROUTES.MANAGER_DASHBOARD, icon: HiOutlineHome },
     { label: "Team Approvals", path: ROUTES.MANAGER_APPROVAL, icon: HiOutlineClipboardDocumentCheck },
     { label: "Leave History", path: ROUTES.LEAVE_HISTORY, icon: HiOutlineClock },
     { label: "Notifications", path: ROUTES.NOTIFICATIONS, icon: HiOutlineBell },
-    { label: "Profile", path: ROUTES.PROFILE, icon: HiOutlineUserCircle },
   ],
   [ROLES.HR]: [
     { label: "Dashboard", path: ROUTES.HR_DASHBOARD, icon: HiOutlineHome },
     { label: "HR Approvals", path: ROUTES.HR_APPROVAL, icon: HiOutlineClipboardDocumentCheck },
     { label: "Leave History", path: ROUTES.LEAVE_HISTORY, icon: HiOutlineClock },
     { label: "Notifications", path: ROUTES.NOTIFICATIONS, icon: HiOutlineBell },
-    { label: "Profile", path: ROUTES.PROFILE, icon: HiOutlineUserCircle },
   ],
   [ROLES.DIRECTOR]: [
     { label: "Dashboard", path: ROUTES.DIRECTOR_DASHBOARD, icon: HiOutlineHome },
     { label: "Director Approvals", path: ROUTES.DIRECTOR_APPROVAL, icon: HiOutlineClipboardDocumentCheck },
     { label: "Leave History", path: ROUTES.LEAVE_HISTORY, icon: HiOutlineClock },
     { label: "Notifications", path: ROUTES.NOTIFICATIONS, icon: HiOutlineBell },
-    { label: "Profile", path: ROUTES.PROFILE, icon: HiOutlineUserCircle },
   ],
   [ROLES.APP_ADMIN]: [
     { label: "Dashboard", path: ROUTES.ADMIN_DASHBOARD, icon: HiOutlineHome },
@@ -55,6 +50,5 @@ export const NAV_ITEMS = {
     { label: "Reports", path: ROUTES.ADMIN_REPORTS, icon: HiOutlineChartBar },
     { label: "Notifications", path: ROUTES.NOTIFICATIONS, icon: HiOutlineBell },
     { label: "Settings", path: ROUTES.SETTINGS, icon: HiOutlineCog6Tooth },
-    { label: "Profile", path: ROUTES.PROFILE, icon: HiOutlineUserCircle },
   ],
 };

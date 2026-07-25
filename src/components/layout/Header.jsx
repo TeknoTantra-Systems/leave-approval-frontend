@@ -5,7 +5,7 @@ import { useUser } from "@/context/UserContext";
 import { useTheme } from "@/context/ThemeContext";
 import { ROLE_LABELS } from "@/constants/roles";
 import { ROUTES } from "@/constants/routes";
-import { HiOutlineBell, HiOutlineMagnifyingGlass } from "react-icons/hi2";
+import { HiOutlineBell, HiOutlineCog6Tooth } from "react-icons/hi2";
 import { FiSun, FiMoon, FiLogOut, FiMenu, FiUser } from "react-icons/fi";
 import { NotificationBadge } from "@/components/notifications";
 import { getNotifications } from "@/services/notificationService";
@@ -16,7 +16,6 @@ export default function Header({ onToggleSidebar }) {
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function Header({ onToggleSidebar }) {
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 md:px-6 dark:border-slate-700 dark:bg-slate-800">
-      <div className="flex items-center gap-3">
+      <div className="flex flex-1 items-center">
         <button
           onClick={onToggleSidebar}
           className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 lg:hidden dark:text-slate-400 dark:hover:bg-slate-700"
@@ -43,20 +42,9 @@ export default function Header({ onToggleSidebar }) {
         >
           <FiMenu className="h-5 w-5" />
         </button>
-
-        <div className="relative hidden sm:block">
-          <HiOutlineMagnifyingGlass className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-64 rounded-lg border border-slate-200 bg-slate-50 py-2 pl-10 pr-4 text-sm text-slate-700 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200 dark:placeholder-slate-500 dark:focus:border-blue-400"
-          />
-        </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-1 items-center justify-end gap-2">
         <button
           onClick={toggleTheme}
           className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-700"
@@ -113,14 +101,22 @@ export default function Header({ onToggleSidebar }) {
                   className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-700"
                 >
                   <FiUser className="h-4 w-4" />
-                  Profile
+                  My Profile
+                </Link>
+                <Link
+                  to={ROUTES.SETTINGS}
+                  onClick={() => setShowUserMenu(false)}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-700"
+                >
+                  <HiOutlineCog6Tooth className="h-4 w-4" />
+                  Settings
                 </Link>
                 <button
                   onClick={handleLogout}
                   className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
                 >
                   <FiLogOut className="h-4 w-4" />
-                  Sign out
+                  Sign Out
                 </button>
               </div>
             </>
