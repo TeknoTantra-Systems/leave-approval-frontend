@@ -40,7 +40,7 @@ export default function Pagination({
 
   return (
     <nav
-      className={`flex items-center justify-center gap-1 ${className}`}
+      className={`flex items-center justify-center gap-1 overflow-x-auto ${className}`}
       aria-label="Pagination"
     >
       <button

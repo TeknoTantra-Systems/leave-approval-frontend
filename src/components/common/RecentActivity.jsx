@@ -39,7 +39,7 @@ export default function RecentActivity({ items = [], title = "Recent Activity", 
                   {item.subtitle}
                 </p>
               </div>
-              <div className="ml-4 flex shrink-0 items-center gap-3">
+              <div className="ml-4 flex shrink-0 flex-wrap items-center gap-2">
                 <StatusBadge status={item.status} />
                 <span className="whitespace-nowrap text-xs text-slate-400 dark:text-slate-500">
                   {formatRelativeTime(item.date)}

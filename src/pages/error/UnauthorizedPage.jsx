@@ -4,9 +4,9 @@ import { HiOutlineHome } from "react-icons/hi2";
 
 export default function UnauthorizedPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-900">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 dark:bg-slate-900">
       <div className="text-center">
-        <p className="text-8xl font-bold text-red-500">403</p>
+        <p className="text-6xl font-bold text-red-500 sm:text-8xl">403</p>
         <h1 className="mt-4 text-2xl font-bold text-slate-800 dark:text-white">
           Access Denied
         </h1>

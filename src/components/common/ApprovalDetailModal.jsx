@@ -38,7 +38,7 @@ export default function ApprovalDetailModal({
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Employee</p>
             <p className="font-medium text-slate-700 dark:text-slate-200">{request.employeeName}</p>

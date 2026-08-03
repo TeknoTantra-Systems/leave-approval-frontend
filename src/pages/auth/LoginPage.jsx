@@ -139,7 +139,7 @@ export default function LoginPage() {
           <p className="mb-2 text-xs font-medium text-slate-500 dark:text-slate-400">
             Demo Accounts (password: password123)
           </p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {DEMO_ACCOUNTS.map((acc) => (
               <button
                 key={acc.email}

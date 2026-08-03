@@ -4,8 +4,25 @@ import StatCard from "@/components/common/StatCard";
 import { Card, StatusBadge, Pagination, SearchBar, EmptyState, Loader } from "@/components/ui";
 import { getAdminLeaveRequests } from "@/services/adminService";
 import { LEAVE_TYPE_LABELS } from "@/constants/leaveTypes";
+import { BACKEND_TO_FRONTEND_STATUS } from "@/constants/statuses";
 import { formatDate } from "@/utils/dateHelpers";
 import { HiOutlineDocumentDuplicate, HiOutlineClock, HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineExclamationTriangle } from "react-icons/hi2";
+
+function transformBackendRequest(r) {
+  return {
+    id: String(r.id),
+    employeeName: r.user?.name ?? "",
+    employeeId: r.user?.employeeId ?? "",
+    department: r.user?.department?.name ?? (typeof r.user?.department === "string" ? r.user.department : ""),
+    leaveType: r.leaveType?.name?.toLowerCase().replace(/\s+/g, "_") ?? "",
+    startDate: r.fromDate,
+    endDate: r.toDate,
+    totalDays: r.totalDays,
+    reason: r.reason,
+    status: BACKEND_TO_FRONTEND_STATUS[r.status] ?? r.status?.toLowerCase() ?? "",
+    appliedOn: r.createdAt,
+  };
+}
 
 const ITEMS_PER_PAGE = 8;
 
@@ -20,8 +37,8 @@ export default function LeaveRequestsPage() {
 
   useEffect(() => {
     async function load() {
-      const data = await getAdminLeaveRequests();
-      setRequests(data);
+      const raw = await getAdminLeaveRequests();
+      setRequests(Array.isArray(raw) ? raw.map(transformBackendRequest) : []);
       setLoading(false);
     }
     load();

@@ -11,8 +11,10 @@ export function UserProvider({ children }) {
     name: user?.name ?? "",
     role: user?.role ?? null,
     department: user?.department ?? "",
+    departmentId: user?.departmentId ?? null,
     employeeId: user?.employeeId ?? "",
     id: user?.id ?? null,
+    managerId: user?.managerId ?? null,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

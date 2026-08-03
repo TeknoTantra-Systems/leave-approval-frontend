@@ -42,7 +42,7 @@ export default function NotificationItem({
         </p>
       </div>
 
-      <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="flex shrink-0 items-center gap-1 opacity-100 transition-opacity lg:opacity-0 lg:group-hover:opacity-100">
         {!isRead && (
           <Button
             variant="ghost"

@@ -79,7 +79,7 @@ export default function UserDetailsPage() {
         title={user.name}
         description="User details and management."
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Button
               variant="secondary"
               size="md"

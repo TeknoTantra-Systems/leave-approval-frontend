@@ -108,7 +108,7 @@ export default function ApprovalMatrixPage() {
       />
 
       <Card>
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Define approval requirements based on the number of leave days requested.
           </p>
@@ -128,7 +128,8 @@ export default function ApprovalMatrixPage() {
           )}
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Desktop table */}
+        <div className="hidden overflow-x-auto lg:block">
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50 text-xs font-medium uppercase tracking-wider text-slate-500 dark:border-slate-700 dark:bg-slate-700/50 dark:text-slate-400">
@@ -210,6 +211,77 @@ export default function ApprovalMatrixPage() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile card view */}
+        <div className="space-y-3 lg:hidden">
+          {(editMode ? editMatrix : matrix).map((row, idx) => (
+            <div key={row.id || idx} className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-600 dark:bg-slate-700/50">
+              <div className="flex items-center justify-between">
+                <div className="min-w-0 flex-1">
+                  {editMode ? (
+                    <input
+                      type="number"
+                      value={row.maxDays ?? ""}
+                      onChange={(e) => handleMaxDaysChange(idx, e.target.value)}
+                      placeholder="No limit"
+                      className="w-24 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+                    />
+                  ) : (
+                    <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                      {row.maxDays ? `<= ${row.maxDays} days` : "No limit"}
+                    </p>
+                  )}
+                  {editMode ? (
+                    <input
+                      type="text"
+                      value={row.description}
+                      onChange={(e) => handleDescriptionChange(idx, e.target.value)}
+                      className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+                    />
+                  ) : (
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{row.description}</p>
+                  )}
+                </div>
+                {editMode && (
+                  <button
+                    onClick={() => removeRow(idx)}
+                    className="ml-2 shrink-0 text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+              <div className="mt-3">
+                {editMode ? (
+                  <div className="flex flex-wrap gap-2">
+                    {APPROVER_OPTIONS.map((a) => (
+                      <label key={a} className="flex items-center gap-1.5 text-sm text-slate-700 dark:text-slate-300">
+                        <input
+                          type="checkbox"
+                          checked={row.approvers.includes(a)}
+                          onChange={() => handleApproverToggle(idx, a)}
+                          className="rounded border-slate-300"
+                        />
+                        {APPROVER_LABELS[a]}
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-1.5">
+                    {row.approvers.map((a) => (
+                      <span
+                        key={a}
+                        className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+                      >
+                        {APPROVER_LABELS[a]}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
 
         {editMode && (
